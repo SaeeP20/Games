@@ -1,0 +1,263 @@
+[gd_scene load_steps=8 format=3 uid="uid://bpepukx53iosh"]
+
+[ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://addons/proto_controller/proto_controller.tscn" id="1_ig7tw"]
+[ext_resource type="Texture2D" uid="uid://kj0hxxvyxaid" path="res://addons/limewash-019-decorative-paints-scaled.webp" id="2_0xm2m"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7dm0k"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_ig7tw"]
+sky_material = SubResource("ProceduralSkyMaterial_7dm0k")
+
+[sub_resource type="Environment" id="Environment_0xm2m"]
+background_mode = 2
+sky = SubResource("Sky_ig7tw")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ig7tw"]
+height = 1.19142
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h2yge"]
+resource_local_to_scene = true
+
+[node name="main" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0xm2m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.836109, -0.369454, -0.405494, 0.199439, -0.48388, 0.852106, -0.511025, -0.793325, -0.330893, 6.95844, 27.8516, -6.03316)
+shadow_enabled = true
+
+[node name="floor" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.8369, 0.0207577, -0.821126)
+use_collision = true
+size = Vector3(73.0267, 1, 70.2286)
+
+[node name="ProtoController" parent="." instance=ExtResource("1_ig7tw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.5201, 2.0398, 6.75427)
+floor_block_on_wall = false
+floor_snap_length = 0.4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ProtoController"]
+transform = Transform3D(1.14477, 0, 0, 0, 1.14477, 0, 0, 0, 1.14477, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_ig7tw")
+
+[node name="midMound" type="Node" parent="."]
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="midMound"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.5, -0.221993, -0.5)
+use_collision = true
+radius = 2.64523
+radial_segments = 19
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="midMound/CSGSphere3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.469194, 0)
+operation = 2
+radius = 2.95313
+height = 2.62402
+
+[node name="cylinder" type="CSGCylinder3D" parent="midMound"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.5, 0.672656, -0.5)
+use_collision = true
+radius = 1.9
+height = 1.99531
+sides = 30
+
+[node name="midBuildingTop" type="Node" parent="."]
+
+[node name="buildingTopMid2" type="CSGBox3D" parent="midBuildingTop"]
+transform = Transform3D(4.06255, 0, 0, 0, 1, 0, 0, 0, 1, 40.2772, 5.11322, 8.23861)
+use_collision = true
+size = Vector3(5.951, 11, 29.475)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="midBuildingTop/buildingTopMid2"]
+transform = Transform3D(0.259274, 0, 0.965804, 0, 1, 0, -0.965804, 0, 0.259274, -3.08797, 0.199407, -13.7877)
+operation = 2
+size = Vector3(4.6, 11.2197, 1.1)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="midBuildingTop/buildingTopMid2"]
+transform = Transform3D(0.320696, 0, 0, 0, 1, 0, 0, 0, 1, -3.14965, 0.284236, 9.61192)
+size = Vector3(1.73657, 10.4973, 10.256)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="midBuildingTop/buildingTopMid2"]
+transform = Transform3D(1.73463, 0, 0, 0, 2.48897, 0, 0, 0, 2.60891, -0.227191, 0.469195, 16.8609)
+rotation_edit_mode = 2
+size = Vector3(3.68271, 4.06427, 1.90018)
+material = SubResource("ShaderMaterial_h2yge")
+
+[node name="Sprite3D" type="Sprite3D" parent="midBuildingTop/buildingTopMid2/CSGBox3D3"]
+transform = Transform3D(0.176148, 0, 0, 0, 0.164209, 0, 0, 0, 1.53548, -0.415352, -0.0771902, 0.954387)
+modulate = Color(0.618189, 0.504204, 0.451022, 1)
+texture = ExtResource("2_0xm2m")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="midBuildingTop/buildingTopMid2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.13012, 0.464391, 16.3143)
+size = Vector3(1.44854, 10.1305, 6.05746)
+
+[node name="Sprite3D" type="Sprite3D" parent="midBuildingTop/buildingTopMid2/CSGBox3D4"]
+transform = Transform3D(-1.03412e-08, 0, 2.1601, 0, 0.418792, 0, -0.236578, 0, -9.4421e-08, -0.728121, -0.284165, -0.0026741)
+modulate = Color(0.737094, 0.626832, 0.576525, 1)
+texture = ExtResource("2_0xm2m")
+
+[node name="bSideMid" type="Node" parent="."]
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="bSideMid"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.95, 4.1, 12.5)
+use_collision = true
+size = Vector3(22.5, 7.2, 1)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="bSideMid/CSGBox3D4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.642651, -0.0999994, -0.798394)
+operation = 2
+size = Vector3(6.72993, 9.6, 2.8)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="bSideMid/CSGBox3D4"]
+transform = Transform3D(2.6119, 0, 0, 0, 2.6119, 0, 0, 0, 2.6119, 8.11063, -2.28556, 1.7771)
+
+[node name="marketEntrance" type="Node" parent="."]
+
+[node name="marketWall" type="CSGBox3D" parent="marketEntrance"]
+transform = Transform3D(2.6334, 0, 0, 0, 1.1, 0, 0, 0, 1.65, -8.43361, 3.895, -4.14956)
+use_collision = true
+size = Vector3(0.473633, 6.7, 20.5449)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="marketEntrance/marketWall"]
+transform = Transform3D(-7.17895e-08, -0.401573, 0, 2.80842, -3.00161e-08, 0, 0, 0, 1.05475, -0.351861, -1.81818, 0.870309)
+operation = 2
+radius = 1.8
+height = 5.45324
+sides = 25
+
+[node name="CSGTorus3D" type="CSGTorus3D" parent="marketEntrance/marketWall"]
+transform = Transform3D(-1.50743e-07, -3.8137, 0, 5.89708, -2.8506e-07, 0, 0, 0, 2.2055, -0.0181572, -1.81818, 0.870309)
+inner_radius = 0.8
+sides = 60
+smooth_faces = false
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="marketEntrance"]
+transform = Transform3D(6.76864, 0, 0, 0, 23.846, 0, 0, 0, 7.03253, -7.51797, 4.80781, 17.4095)
+use_collision = true
+size = Vector3(4.19985, 1, 1.54041)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="marketEntrance"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.30641, 2.795, 6.5875)
+use_collision = true
+size = Vector3(3.5, 5.6, 3.5)
+
+[node name="catwalk" type="Node" parent="."]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="catwalk"]
+transform = Transform3D(1.2, 0, 0, 0, 1, 0, 0, 0, 0.99, 14.2345, 1.57668, -14.6294)
+use_collision = true
+size = Vector3(38.8574, 2.95337, 0.4)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="catwalk/CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.86203, -0.301363, -0.0826941)
+operation = 2
+size = Vector3(5.04462, 3.99951, 1)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="catwalk/CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00413513, -0.161469, -6.30763)
+size = Vector3(38.8475, 1.90668, 12.9895)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="catwalk"]
+transform = Transform3D(1.2, 0, 0, 0, 1, 0, 0, 0, 0.99, 37.327, 1.57668, -9.6479)
+use_collision = true
+size = Vector3(0.4, 2.953, 10.464)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="catwalk/CSGBox3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.33262, -0.161469, -5.45123)
+size = Vector3(12.3603, 1.90668, 24.7737)
+
+[node name="boxTree" type="CSGBox3D" parent="catwalk"]
+transform = Transform3D(1.20124, 0, 0, 0, 1.00103, 0, 0, 0, 0.99102, -6.6089, 4.12775, -16.3353)
+use_collision = true
+size = Vector3(3, 6, 3)
+
+[node name="boxTopMid" type="CSGBox3D" parent="catwalk"]
+transform = Transform3D(1.20124, 0, 0, 0, 1.00103, 0, 0, 0, 0.99102, 39.3717, 4.32713, -7.9677)
+use_collision = true
+size = Vector3(3, 6, 3)
+
+[node name="boxTopMid2" type="CSGBox3D" parent="catwalk"]
+transform = Transform3D(1.20124, 0, 0, 0, 1.00103, 0, 0, 0, 0.99102, 39.3717, 3.87194, -22.5829)
+use_collision = true
+size = Vector3(3, 3, 3)
+
+[node name="catwalkSideBuilding" type="CSGBox3D" parent="catwalk"]
+transform = Transform3D(1.20124, 0, 0, 0, 1.00103, 0, 0, 0, 0.99102, 18.4656, 5.41782, -24.2)
+use_collision = true
+size = Vector3(31.791, 11, 6.26367)
+
+[node name="topMidBuilding" type="CSGBox3D" parent="catwalk"]
+transform = Transform3D(1.2, 0, 0, 0, 1, 0, 0, 0, 0.99, 49.6318, 5.12501, -12.7861)
+use_collision = true
+size = Vector3(4.506, 11, 16.804)
+
+[node name="stairs" type="Node" parent="."]
+
+[node name="bottomStairs" type="CSGBox3D" parent="stairs"]
+transform = Transform3D(1, 0, 0, 0, 0.9, 0, 0, 0, 1.21, 19.65, 0.657067, -6.62002)
+use_collision = true
+size = Vector3(0.3, 1, 1.8)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="stairs/bottomStairs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.35, 0, 0)
+size = Vector3(0.3, 1, 1.8)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="stairs/bottomStairs/CSGBox3D"]
+transform = Transform3D(5.4, 0, 0, 0, 0.900013, 0, 0, 0, 1.65003, 3.24, -0.135, 0.329547)
+size = Vector3(1.2, 0.7, 0.5)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="stairs/bottomStairs/CSGBox3D"]
+transform = Transform3D(5.4, 0, 0, 0, 0.900013, 0, 0, 0, 1.65003, 3.24, 0.087222, -0.488636)
+size = Vector3(1.2, 0.7, 0.5)
+
+[node name="midStairs" type="CSGBox3D" parent="stairs"]
+transform = Transform3D(0.99999, 0, 0, 0, 0.899989, 0, 0, 0, 1.21, 19.65, 1.21198, -9.22569)
+use_collision = true
+size = Vector3(0.3, 1.6, 2.51816)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="stairs/midStairs"]
+transform = Transform3D(0.999993, 0, 0, 0, 1, 0, 0, 0, 1, -6.35, -0.138888, 0)
+size = Vector3(0.3, 1.9, 2.6)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="stairs/midStairs/CSGBox3D"]
+transform = Transform3D(5.4, 0, 0, 0, 0.900013, 0, 0, 0, 1.65003, 3.24, -0.23303, 0.793656)
+size = Vector3(1.2, 0.7, 0.5)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="stairs/midStairs/CSGBox3D"]
+transform = Transform3D(5.4, 0, 0, 0, 0.900013, 0, 0, 0, 1.65003, 3.24, -0.010808, -0.0245285)
+size = Vector3(1.2, 0.7, 0.5)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="stairs/midStairs/CSGBox3D"]
+transform = Transform3D(5.4, 0, 0, 0, 0.900013, 0, 0, 0, 1.65003, 3.24, 0.200824, -0.856013)
+size = Vector3(1.2, 0.7, 0.5)
+
+[node name="topStairs" type="CSGBox3D" parent="stairs"]
+transform = Transform3D(0.999974, 0, 0, 0, 0.863972, 0, 0, 0, 1.21, 19.65, 1.74757, -12.7592)
+use_collision = true
+size = Vector3(0.3, 3, 3.4)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="stairs/topStairs"]
+transform = Transform3D(0.999986, 0, 0, 0, 1, 0, 0, 0, 1, -6.35, -0.0888866, -0.0500002)
+size = Vector3(0.3, 3.2, 3.3)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="stairs/topStairs"]
+transform = Transform3D(5.40001, 0, 0, 0, 0.937523, 0, 0, 0, 1.65003, -3.11003, -0.287417, 1.23457)
+size = Vector3(1.2, 0.7, 0.5)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="stairs/topStairs"]
+transform = Transform3D(5.40001, 0, 0, 0, 0.937524, 0, 0, 0, 1.65003, -3.11003, -0.0559328, 0.416381)
+size = Vector3(1.2, 0.7, 0.5)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="stairs/topStairs"]
+transform = Transform3D(5.40001, 0, 0, 0, 0.937524, 0, 0, 0, 1.65003, -3.11003, 0.164519, -0.415104)
+size = Vector3(1.2, 0.7, 0.5)
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="stairs/topStairs"]
+transform = Transform3D(5.40001, 0, 0, 0, 0.937524, 0, 0, 0, 1.65003, -3.11003, 0.396008, -1.27176)
+size = Vector3(1.2, 0.7, 0.536621)
